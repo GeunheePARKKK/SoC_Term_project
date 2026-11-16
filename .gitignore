@@ -1,0 +1,13 @@
+# Vivado generated
+*.cache/
+*.hw/
+*.runs/
+*.sim/
+*.ip_user_files/
+*.Xil/
+.Xil/
+*.jou
+*.log
+*.str
+*.backup.*
+webtalk*
