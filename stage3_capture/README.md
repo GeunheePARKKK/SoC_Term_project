@@ -94,6 +94,20 @@ py -3 tools\capture_to_png.py --port COM23 --label scissors -n 50 --interval 0.5
 | `-n 개수` | 찍을 장 수 |
 | `--interval 초` | 장 사이 대기 |
 | `--info` | IP 상태만 출력 |
+| `--no-preview` | `_x4.png` 확대본을 만들지 않음 (학습 데이터 모을 때) |
+
+### 팀원에게 보낼 데이터셋 만들기
+1. 카메라를 위에서 내려다보게 **고정**, 바닥은 흰 A4 용지, 물건은 TFT **가운데**
+2. 클래스마다 (물건을 0.5초마다 조금씩 옮기고 돌리면서):
+   ```bat
+   py -3 tools\capture_to_png.py --port COM23 --label scissors -n 150 --interval 0.5 --no-preview
+   py -3 tools\capture_to_png.py --port COM23 --label knife    -n 150 --interval 0.5 --no-preview
+   py -3 tools\capture_to_png.py --port COM23 --label bottle   -n 150 --interval 0.5 --no-preview
+   py -3 tools\capture_to_png.py --port COM23 --label phone    -n 150 --interval 0.5 --no-preview
+   py -3 tools\capture_to_png.py --port COM23 --label empty    -n 100 --interval 0.5 --no-preview
+   ```
+3. `captures` 폴더를 압축해서 전달 + `실습 순서.md` 4-B2 조건 같이 전달
+- 시연 때도 같은 카메라 높이, 각도, 조명이어야 정확도가 유지된다.
 
 - 한 장에 약 0.6초 (프레임 대기 + 49KB 전송).
 - **ARM 프로그램이 UART를 921,600bps로 바꾼다.** 터미널 프로그램을 115,200으로 열면 글자가 깨진다.

@@ -76,6 +76,7 @@ def main():
     ap.add_argument("-n", "--count", type=int, default=1, help="number of frames")
     ap.add_argument("--interval", type=float, default=0.0, help="seconds between frames")
     ap.add_argument("--info", action="store_true", help="print IP status and exit")
+    ap.add_argument("--no-preview", action="store_true", help="do not save the _x4 preview (dataset mode)")
     args = ap.parse_args()
 
     with serial.Serial(args.port, args.baud, timeout=0.2) as ser:
@@ -96,7 +97,8 @@ def main():
             name = f"{prefix}_{start_idx + k:04d}"
             h, w = img.shape[:2]
             Image.fromarray(img).save(os.path.join(out_dir, name + ".png"))
-            Image.fromarray(img).resize((w * 4, h * 4), Image.NEAREST).save(os.path.join(out_dir, name + "_x4.png"))
+            if not args.no_preview:
+                Image.fromarray(img).resize((w * 4, h * 4), Image.NEAREST).save(os.path.join(out_dir, name + "_x4.png"))
             mean = img.reshape(-1, 3).mean(axis=0)
             print(f"[{k+1}/{args.count}] {name}.png {w}x{h}  ({time.time()-t0:.2f}s, capture #{n})  "
                   f"mean RGB = {mean[0]:.0f} {mean[1]:.0f} {mean[2]:.0f}")
