@@ -3,7 +3,7 @@ Stage 3 PC tool: ask the board for camera frames over UART and save them as PNG.
 
 Board side: stage3_capture/sdk_src/main.c
   'c' -> "FRAME <n> <w> <h>\\r\\n" + w*h*3 raw RGB bytes + "END\\r\\n"
-  UART: 921600 bps 8N1
+  UART: 460800 bps 8N1
 
 Examples
   py -3 tools\\capture_to_png.py --port COM23
@@ -48,7 +48,7 @@ def read_exact(ser, n, timeout_s):
     return bytes(data)
 
 
-def grab(ser, timeout_s=10.0):
+def grab(ser, timeout_s=3.0):
     ser.reset_input_buffer()
     ser.write(b"c")
     while True:
@@ -67,10 +67,24 @@ def grab(ser, timeout_s=10.0):
     return count, img
 
 
+def grab_retry(ser, tries=3):
+    """capture with automatic retry: a frame with missing bytes is discarded and re-captured"""
+    last = None
+    for t in range(tries):
+        try:
+            return grab(ser)
+        except (TimeoutError, ValueError) as e:
+            last = e
+            print(f"   ! bad frame ({e}) -> retry {t + 1}/{tries}")
+            time.sleep(0.3)                 # let the rest of the broken frame arrive
+            ser.reset_input_buffer()
+    raise RuntimeError(f"capture failed {tries} times: {last}")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--port", required=True, help="UART COM port, e.g. COM23")
-    ap.add_argument("--baud", type=int, default=921600)
+    ap.add_argument("--baud", type=int, default=460800)
     ap.add_argument("--out", default="captures", help="output folder")
     ap.add_argument("--label", default="", help="class name -> subfolder (e.g. scissors)")
     ap.add_argument("-n", "--count", type=int, default=1, help="number of frames")
@@ -80,6 +94,10 @@ def main():
     args = ap.parse_args()
 
     with serial.Serial(args.port, args.baud, timeout=0.2) as ser:
+        try:
+            ser.set_buffer_size(rx_size=1 << 20, tx_size=4096)   # Windows: big RX buffer (avoid drops)
+        except Exception:
+            pass
         if args.info:
             ser.reset_input_buffer()
             ser.write(b"i")
@@ -93,7 +111,7 @@ def main():
 
         for k in range(args.count):
             t0 = time.time()
-            n, img = grab(ser)
+            n, img = grab_retry(ser)
             name = f"{prefix}_{start_idx + k:04d}"
             h, w = img.shape[:2]
             Image.fromarray(img).save(os.path.join(out_dir, name + ".png"))

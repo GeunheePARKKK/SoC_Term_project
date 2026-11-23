@@ -55,7 +55,7 @@ term_top.vhd
 | `ip_repo/capture_1.0/component.xml`, `xgui/` | 패키징된 IP (`user.org:user:capture:1.0`) |
 | `sim/tb_capture.v` | capture IP 테스트벤치 |
 | `src/` | 2단계 소스 + 수정본 (`term_top.vhd`, `camera_top.vhd`에 cap_* 추가), `system_bd.tcl` |
-| `sdk_src/main.c` | ARM 프로그램: UART 921,600bps, `c` 받으면 캡처 후 바이너리 전송 |
+| `sdk_src/main.c` | ARM 프로그램: UART 460,800bps, `c` 받으면 캡처 후 바이너리 전송 |
 | `tools/capture_to_png.py` | 노트북 수신 스크립트 → PNG 저장 |
 | `bitstream/` | `term_top.bit`, `term_top.hdf`, `ps7_init.tcl`, `capture_app.elf` (바로 실행 가능) |
 | `package_ip.tcl` | IP 패키징 |
@@ -109,8 +109,8 @@ py -3 tools\capture_to_png.py --port COM23 --label scissors -n 50 --interval 0.5
 3. `captures` 폴더를 압축해서 전달 + `실습 순서.md` 4-B2 조건 같이 전달
 - 시연 때도 같은 카메라 높이, 각도, 조명이어야 정확도가 유지된다.
 
-- 한 장에 약 0.6초 (프레임 대기 + 49KB 전송).
-- **ARM 프로그램이 UART를 921,600bps로 바꾼다.** 터미널 프로그램을 115,200으로 열면 글자가 깨진다.
+- 한 장에 약 1.1초 (프레임 대기 + 49KB 전송). 가끔 바이트가 빠진 장은 자동으로 다시 찍는다.
+- **ARM 프로그램이 UART를 460,800bps로 바꾼다.** 터미널 프로그램을 115,200으로 열면 글자가 깨진다.
 
 ---
 

@@ -7,7 +7,7 @@
  *    0x00008 INFO  R: {width, height} = {128, 128}
  *    0x10000 + 4*i R: pixel i (128x128, row-major) = 0x00RRGGBB
  *
- *  UART1 runs at 921600 bps (8N1), switched at start-up
+ *  UART1 runs at 460800 bps (8N1), switched at start-up
  *    commands from the PC:
  *      'c' : capture one frame and send it (binary)
  *      'i' : print IP status (text)
@@ -32,9 +32,10 @@
 #define IMG_H   128
 
 /* UART reference clock 100 MHz:  baud = 100e6 / (CD * (BDIV + 1))
- * CD = 18, BDIV = 5  ->  925,926 bps  (921,600 + 0.5 %)                     */
-#define UART_CD     18u
-#define UART_BDIV   5u
+ * CD = 31, BDIV = 6  ->  460,829 bps  (460,800 + 0.006 %)
+ * (921,600 dropped bytes on the PC side's USB-serial chip during long frames) */
+#define UART_CD     31u
+#define UART_BDIV   6u
 
 static void uart_init_fast(void)
 {
@@ -111,7 +112,7 @@ static void send_frame(void)
 int main(void)
 {
     uart_init_fast();
-    put_s("\r\nSTAGE3 CAPTURE READY 128x128 @921600  ('c' = capture, 'i' = status)\r\n");
+    put_s("\r\nSTAGE3 CAPTURE READY 128x128 @460800  ('c' = capture, 'i' = status)\r\n");
     print_status();
 
     while (1) {

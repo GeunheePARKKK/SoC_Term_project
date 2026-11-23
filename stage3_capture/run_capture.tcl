@@ -18,4 +18,4 @@ targets -set -nocase -filter {name =~ "ARM*#0"}
 rst -processor
 dow $here/bitstream/capture_app.elf
 con
-puts "capture_app running - send 'c' over UART (115200) or use tools/capture_to_png.py"
+puts "capture_app running - send 'c' over UART (460800) or use tools/capture_to_png.py"
