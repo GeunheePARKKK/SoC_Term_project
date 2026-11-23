@@ -19,3 +19,5 @@ stage3_capture/vivado/
 stage3_capture/captures/
 stage3_capture/tools/captures/
 __pycache__/
+stage5_scanner/vivado/
+stage5_scanner/captures/
