@@ -106,7 +106,7 @@ py -3 tools\capture_to_png.py --port COM23 --label scissors -n 50 --interval 0.5
    py -3 tools\capture_to_png.py --port COM23 --label phone    -n 150 --interval 0.5 --no-preview
    py -3 tools\capture_to_png.py --port COM23 --label empty    -n 100 --interval 0.5 --no-preview
    ```
-3. `captures` 폴더를 압축해서 전달 + `실습 순서.md` 4-B2 조건 같이 전달
+3. `captures` 폴더를 압축해서 전달 + 루트 `README.md` 4-B2 조건 같이 전달
 - 시연 때도 같은 카메라 높이, 각도, 조명이어야 정확도가 유지된다.
 
 - 한 장에 약 1.1초 (프레임 대기 + 49KB 전송). 가끔 바이트가 빠진 장은 자동으로 다시 찍는다.

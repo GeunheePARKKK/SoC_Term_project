@@ -99,4 +99,4 @@ C:\Xilinx\Vivado\2019.1\bin\vivado.bat -mode batch -source create_project.tcl
 | 굽기 실패 직후 `APU (JTAG port open error. AP transaction timeout)` | 굽기가 실패하면 ARM이 잠긴다. **보드 전원 재투입**으로만 풀린다 |
 | JTAG에 `xc7z020`만 있고 `arm_dap` 없음 | Independent JTAG 모드 증상(J19/MIO2). J19 재삽입 1회 시도 → 안 되면 **보드 교체**. 첫 번째 보드는 결국 교체로 해결 |
 
-자세한 경과는 저장소 루트 [`실습 순서.md`](../실습%20순서.md) 참고.
+자세한 경과는 저장소 루트 [`README.md`](../README.md) 참고.

@@ -131,6 +131,6 @@ when    x"6F"   =>  i2c_rom_data        <=   x"78503D" & '1' & "000" & x"0";    
 | TFT가 검다 | 백라이트 문제가 아니라 **영상 데이터가 0**인 것. LED D1 확인 → 카메라 연결/전원 문제 |
 | 카메라가 손 못 댈 정도로 뜨거움 | 즉시 전원 OFF. 방향 반대로 꽂힌 것 |
 | `[Place 30-876] ... W18 can only be used as the N side of a differential clock input` | VSYNC/HSYNC를 클럭(`process(camera_VSYNC)`)으로 쓰면 발생. PCLK로 샘플링해 에지 검출할 것 |
-| JTAG에서 `arm_dap`이 안 보임 | 1단계는 PL만 쓰므로 영향 없음. 2단계(SDK) 전에 해결 → 상위 `실습 순서.md` 2단계 시작 전 체크 참고 |
+| JTAG에서 `arm_dap`이 안 보임 | 1단계는 PL만 쓰므로 영향 없음. 2단계(SDK) 전에 해결 → 상위 `README.md` 2단계 시작 전 체크 참고 |
 
-자세한 진행 기록과 Q&A는 저장소 루트의 [`실습 순서.md`](../실습%20순서.md) 1단계 참고.
+자세한 진행 기록과 Q&A는 저장소 루트의 [`README.md`](../README.md) 1단계 참고.

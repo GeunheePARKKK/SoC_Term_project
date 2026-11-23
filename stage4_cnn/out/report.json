@@ -1,0 +1,68 @@
+{
+ "classes": [
+  "phone",
+  "power_bank",
+  "scissors"
+ ],
+ "split": {
+  "train": 179,
+  "val": 42,
+  "test": 42
+ },
+ "train_per_class": [
+  62,
+  61,
+  56
+ ],
+ "recipe": "no augmentation, no class weights, AdamW lr 1e-3 wd 0 + cosine, batch 32, best-validation checkpoint",
+ "epochs": 200,
+ "runs": [
+  {
+   "seed": 1,
+   "val_macro_recall": 0.8632478713989258,
+   "best_epoch": 10,
+   "test_accuracy": 0.9285714030265808
+  },
+  {
+   "seed": 2,
+   "val_macro_recall": 0.7042735119660696,
+   "best_epoch": 39,
+   "test_accuracy": 0.5476190447807312
+  },
+  {
+   "seed": 3,
+   "val_macro_recall": 0.9111111164093018,
+   "best_epoch": 6,
+   "test_accuracy": 0.9285714030265808
+  }
+ ],
+ "chosen_seed": 3,
+ "chosen_val": 0.9111111164093018,
+ "chosen_epoch": 6,
+ "test_accuracy": 0.9285714030265808,
+ "test_macro_recall": 0.9333333373069763,
+ "test_confusion": [
+  [
+   14,
+   0,
+   0
+  ],
+  [
+   3,
+   12,
+   0
+  ],
+  [
+   0,
+   0,
+   13
+  ]
+ ],
+ "c_reference_parity": {
+  "argmax_agree": 42,
+  "n": 42,
+  "max_abs_logit_error": 1.043081283569336e-07
+ },
+ "params": 6027,
+ "train_seconds": 154.6
+}
